@@ -1,9 +1,8 @@
 import React, {useState, useEffect} from "react";
 import { ReactComponent as CalendarIcon } from "./calendar.svg";
-import { ContainerDiv, InputField, InputContainer, CalendarContainer, CalendarHeader, CalendarHeaderContent, CalendarButton, DateContainer, DayBlock, DateBlock } from "./date-picker.styles";
+import Calendar from "./calendar/calendar.component";
+import { ContainerDiv, InputContainer, InputField } from "./date-picker.styles";
 
-const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 
 const currentDate = new Date(Date.now());
 let defaultDate = currentDate.toLocaleDateString().split("/");
@@ -102,28 +101,15 @@ const DatePicker = () => {
         <InputField placeholder="DD/MM/YY" value={inputValue} name="date" readOnly/>
         <CalendarIcon style={iconStyles} fill={`${iconActive ? "#00aad7" : "black"}`}/>
         </InputContainer>
-        <CalendarContainer isVisible={isVisible}>
-            <CalendarHeader>
-                <CalendarButton name="back" onClick={handleButtonClick}>&#8592;</CalendarButton>
-                <CalendarHeaderContent>{`${months[month]} ${year}`}</CalendarHeaderContent>
-                <CalendarButton name="forward" onClick={handleButtonClick}>&#8594;</CalendarButton>
-            </CalendarHeader>
-            <DateContainer>
-                {
-                    days.map((day, index) => {
-                        return <DayBlock key={index}>{day.slice(0, 3)}</DayBlock>
-                    })
-
-                    
-                }
-                {
-                    dates.map((date, index) => {
-                        if(date.getMonth() !== month) return <div key={index + 7}></div>;
-                        return <DateBlock key={index + 7} value={date} onClick={() => handleDateClick(date)} active={checkActive(date)} >{date.getDate()}</DateBlock>
-                    })
-                }
-            </DateContainer>
-        </CalendarContainer>
+        
+        <Calendar 
+        month={month} 
+        year={year} 
+        dates={dates} 
+        isVisible={isVisible} 
+        handleButtonClick={handleButtonClick} 
+        checkActive={checkActive} 
+        handleDateClick={handleDateClick}/>
         
         </ContainerDiv>
     );
