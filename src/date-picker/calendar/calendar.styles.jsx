@@ -12,18 +12,20 @@ export const CalendarContainer = styled.div`
     flex-direction: column;
     align-items: center;
     margin-top: 1rem;
-    box-shadow: 15px 15px 20px 1px #888888;
     animation-name:${showCalender};
     animation-duration: .2s;
     animation-fill-mode: forwards;
     animation-timing-function: ease-out;
+    z-index: 1000;
 `;
+
+// box-shadow: 15px 15px 20px 1px #888888;
 
 
 export const CalendarHeader = styled.div`
     width: 100%;
     height: 20%;
-    background-color: white;
+    position: relative;
     display: flex;
     justify-content: space-between;
     align-items: center;

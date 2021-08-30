@@ -2,37 +2,9 @@ import React, {useState, useEffect} from "react";
 import { ReactComponent as CalendarIcon } from "./calendar.svg";
 import Calendar from "./calendar/calendar.component";
 import { ContainerDiv, InputContainer, InputField } from "./date-picker.styles";
+import { populateDates, defaultDate, currentDate, iconStyles } from "./date-picker.utils";
 
 
-const currentDate = new Date(Date.now());
-let defaultDate = currentDate.toLocaleDateString().split("/");
-defaultDate = `${defaultDate[1] < 10 ? `0${defaultDate[1]}` : defaultDate[1]}/${defaultDate[0] < 10 ? `0${defaultDate[0]}` : defaultDate[0]}/${defaultDate[2]}`;
-
-const iconStyles = {
-    width: "2.2rem",
-    height: "2.2rem"
-}
-
-const populateDates = (month, year) => {
-    const startDate = new Date(year, month, 1);
-    const endDate = new Date(year, month, 31);
-    let minDate = 1;
-    let maxDate = 31;
-    const dates = [];
-
-    //For Day overflow
-    if(startDate.getDay() > 0) minDate = minDate - startDate.getDay();
-    
-    if(endDate.getDay() < 6) maxDate = maxDate + ( 6 - endDate.getDay());
-
-    //Collect dates
-    for(let i = minDate; i <= maxDate; i++){
-        dates.push(new Date(year, month, i));
-    };
-
-    return dates;
-
-};
 
 const DatePicker = () => {
     
@@ -97,12 +69,13 @@ const DatePicker = () => {
 
     return (
         <ContainerDiv>
-        <InputContainer onClick={showCalender} >
+        <InputContainer onClick={showCalender}>
         <InputField placeholder="DD/MM/YY" value={inputValue} name="date" readOnly/>
         <CalendarIcon style={iconStyles} fill={`${iconActive ? "#00aad7" : "black"}`}/>
         </InputContainer>
         
-        <Calendar 
+        <Calendar
+        single 
         month={month} 
         year={year} 
         dates={dates} 
