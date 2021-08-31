@@ -1,4 +1,9 @@
-import styled from "styled-components";
+import styled, {keyframes} from "styled-components";
+
+const showCalender = keyframes`
+    0% {transform: scale(1.0)}
+    100% {transform: scale(1.05)}
+`;
 
 export const InputField = styled.input`
     width: 8rem;
@@ -24,6 +29,12 @@ export const CalendarsContainer = styled.div`
     column-gap: 2rem;
     box-shadow: 15px 15px 20px 1px #888888;
     box-sizing: border-box;
-    padding: 1rem;
-    margin-top: .5rem;
+    padding: .5rem;
+    margin-top: 1rem;
+    position: absolute;
+    z-index: 1000;
+    animation-name:${showCalender};
+    animation-duration: .2s;
+    animation-fill-mode: forwards;
+    animation-timing-function: ease-out;
 `;

@@ -36,42 +36,65 @@ const DateToFrom = () => {
     }
 
     const checkActiveFrom = date => {
-        
             if(activeDateFrom === date.toLocaleDateString()) return true;
             return false;
-    
         };
 
     const checkActiveTo = date => {
-        
             if(activeDateTo === date.toLocaleDateString()) return true;
             return false;
-        
         };
 
-        const handleButtonClick = event => {
-            switch(event.target.name){
-                case "forward":
-                    if(monthFrom === 11){
-                        setMonthFrom(0);
-                        setYearFrom(yearFrom + 1);
-                    } else {
-                        setMonthFrom(monthFrom + 1);
-                    }
-                    
-                break;
+    const checkIsBetween = date => {
+        const parsedDate = Date.parse(date.toLocaleDateString());
+        const parsedFrom = Date.parse(activeDateFrom);
+        const parsedTo = Date.parse(activeDateTo);
+        if(parsedDate > parsedFrom && parsedDate < parsedTo) return true;
+        return false;
+    
+    }
 
-                case "back":
-                    if(monthFrom === 0){
-                        setMonthFrom(11);
-                        setYearFrom(yearFrom - 1);
-                    } else {
-                        setMonthFrom(monthFrom - 1);
-                    }
+    const handleButtonClick = event => {
+        switch(event.target.name){
+             case "forward1":
+                if(monthFrom === 11){
+                    setMonthFrom(0);
+                    setYearFrom(yearFrom + 1);
+                } else {
+                    setMonthFrom(monthFrom + 1);
+                }
                     
-                break;
+            break;
 
-                default: 
+            case "back1":
+                 if(monthFrom === 0){
+                    setMonthFrom(11);
+                    setYearFrom(yearFrom - 1);
+                } else {
+                     setMonthFrom(monthFrom - 1);
+                }
+                    
+            break;
+            case "forward2":
+                if(monthTo === 11){
+                    setMonthTo(0);
+                    setYearTo(yearTo + 1);
+                } else {
+                    setMonthTo(monthTo + 1);
+                }
+                    
+            break;
+            case "back2":
+                if(monthTo === 0){
+                    setMonthTo(11);
+                    setYearTo(yearTo - 1);
+                } else {
+                    setMonthTo(monthTo - 1);
+                }
+                    
+            break;
+
+            default: 
             }
         };
     
@@ -113,18 +136,24 @@ const DateToFrom = () => {
             month={monthFrom} 
             year={yearFrom} 
             dates={datesFrom} 
-            isVisible={isActive} 
+            isVisible={isActive}
+            backName={"back1"}
+            forwardName={"forward1"} 
             handleButtonClick={handleButtonClick} 
-            checkActive={checkActiveFrom} 
+            checkActive={checkActiveFrom}
+            checkIsBetween={checkIsBetween}
             handleDateClick={handleDateClickFrom}/>
 
             <Calendar 
             month={monthTo} 
             year={yearTo} 
             dates={datesTo} 
-            isVisible={isActive} 
+            isVisible={isActive}
+            backName={"back2"}
+            forwardName={"forward2"}  
             handleButtonClick={handleButtonClick} 
-            checkActive={checkActiveTo} 
+            checkActive={checkActiveTo}
+            checkIsBetween={checkIsBetween} 
             handleDateClick={handleDateClickTo}/>
             </CalendarsContainer>
 

@@ -5,13 +5,13 @@ const months = ["January", "February", "March", "April", "May", "June", "July", 
 const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 
 
-const Calendar = ({month, year, isVisible, dates, handleButtonClick, handleDateClick, checkActive}) => {
+const Calendar = ({month, year, isVisible, dates, handleButtonClick, handleDateClick, checkActive, backName, forwardName, checkIsBetween, single}) => {
     return (
-        <CalendarContainer isVisible={isVisible}>
+        <CalendarContainer isVisible={isVisible} single={single}>
         <CalendarHeader>
-            <CalendarButton name="back" onClick={handleButtonClick}>&#8592;</CalendarButton>
+            <CalendarButton name={backName} onClick={handleButtonClick}>&#8592;</CalendarButton>
             <CalendarHeaderContent>{`${months[month]} ${year}`}</CalendarHeaderContent>
-            <CalendarButton name="forward" onClick={handleButtonClick}>&#8594;</CalendarButton>
+            <CalendarButton name={forwardName} onClick={handleButtonClick}>&#8594;</CalendarButton>
         </CalendarHeader>
         <DateContainer>
             {
@@ -28,7 +28,8 @@ const Calendar = ({month, year, isVisible, dates, handleButtonClick, handleDateC
                             key={index + 7} 
                             value={date} 
                             onClick={() => handleDateClick(date)} 
-                            active={checkActive(date)}>
+                            active={checkActive(date)}
+                            isBetween={checkIsBetween(date)}>
                                 {
                                     date.getDate()
                                 }

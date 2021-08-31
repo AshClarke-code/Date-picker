@@ -8,12 +8,11 @@ import { populateDates, defaultDate, currentDate, iconStyles } from "./date-pick
 
 const DatePicker = () => {
     
-    const [iconActive, setIconActive] = useState(false);
+    const [isActive, setIsActive] = useState(false);
     const [inputValue, setInputValue] = useState(defaultDate);
     const [year, setYear] = useState(currentDate.getFullYear());
     const [month, setMonth] = useState(currentDate.getMonth());
     const [dates, setDates] = useState([]);
-    const [isVisible, setIsVisible] = useState(false);
     const [activeDate, setActiveDate] = useState(currentDate.toLocaleDateString());
 
     useEffect(() => {
@@ -43,8 +42,7 @@ const DatePicker = () => {
     };
 
     const showCalender = event => {
-        setIconActive(!iconActive);
-        setIsVisible(!isVisible);
+        setIsActive(!isActive);
 
     };
 
@@ -71,17 +69,20 @@ const DatePicker = () => {
         <ContainerDiv>
         <InputContainer onClick={showCalender}>
         <InputField placeholder="DD/MM/YY" value={inputValue} name="date" readOnly/>
-        <CalendarIcon style={iconStyles} fill={`${iconActive ? "#00aad7" : "black"}`}/>
+        <CalendarIcon style={iconStyles} fill={`${isActive ? "#00aad7" : "black"}`}/>
         </InputContainer>
         
         <Calendar
-        single 
+        single={true} 
         month={month} 
         year={year} 
-        dates={dates} 
-        isVisible={isVisible} 
+        dates={dates}
+        backName={"back"}
+        forwardName={"forward"} 
+        isVisible={isActive} 
         handleButtonClick={handleButtonClick} 
-        checkActive={checkActive} 
+        checkActive={checkActive}
+        checkIsBetween={() => false}
         handleDateClick={handleDateClick}/>
         
         </ContainerDiv>
